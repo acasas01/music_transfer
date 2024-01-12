@@ -93,6 +93,19 @@ class Playlist extends React.Component {
 
     handleCheckChildElement = (event) => {
         const { parsedJsonData, selectedPlaylists } = this.state;
+        
+        if (selectedPlaylists.includes(playlistName)) {
+            // If the playlist name is already in the selectedPlaylists, remove it
+            this.setState({
+              selectedPlaylists: selectedPlaylists.filter(name => name !== playlistName),
+            });
+          } else {
+            // If the playlist name is not in selectedPlaylists, add it
+            this.setState({
+              selectedPlaylists: [...selectedPlaylists, playlistName],
+            });
+          }
+
         const updatedData = parsedJsonData.map((data) => {
             if (data.id === event.target.id) {
                 if (data.isChecked) {
@@ -103,11 +116,11 @@ class Playlist extends React.Component {
                 return { ...data, isChecked: !data.isChecked };
             }
             return data;
-    });
+        });
 
-    this.setState({
-        parsedJsonData: updatedData,
-    });
+        this.setState({
+            parsedJsonData: updatedData,
+        });
     };
     
 

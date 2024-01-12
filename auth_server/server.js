@@ -156,7 +156,7 @@ const fs = require('fs');
 
 const private_key = fs.readFileSync('AuthKey_2H7DC3BRNY.p8').toString();
 const team_id = 'B6GVCPR67Y';
-const key_id = '2H7DC3BRNY';
+const key_id = '2H7DC3BRNY'; 
 
 const token = jwt.sign(
   {
