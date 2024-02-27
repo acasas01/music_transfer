@@ -161,8 +161,8 @@ const key_id = '2H7DC3BRNY';
 const token = jwt.sign(
   {
     iss: team_id,
-    iat: Math.floor(Date.now() / 1000),
-    exp: Math.floor(Date.now() / 1000) + 1500000
+    // iat: Math.floor(Date.now() / 1000),
+    // exp: Math.floor(Date.now() / 1000) + 1500000
   },
   private_key,
   {
@@ -175,10 +175,17 @@ const token = jwt.sign(
 );
 console.log('jwt token: ', token);
 
-app.get('/token', function(req, res) {
-  console.log("activated")
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ token: token }));
+// app.get('/token', function(req, res) {
+//   console.log("activated")
+//   res.setHeader('Content-Type', 'application/json');
+//   res.send(JSON.stringify({ token: token }));
+// });
+const token_key = 'fart666fuckAPPLEBRUH'
+app.get('/token', function (req, res) {
+  if(req.query.key === token_key){
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({token: token}));
+  }
 });
 
 app.get('/appleplaylist', async function (req, res) {
@@ -186,11 +193,14 @@ app.get('/appleplaylist', async function (req, res) {
     const code = req.query.code; // Retrieve the code from the query parameter
     //const access_token = await getAccessToken(code); // Call the new function to get the access token
     //console.log("playlist access t ", g_access_token);
-    const result = await fetch('https://api.music.apple.com/v1/me/', {
+    console.log("are we even here bruh ", code);
+    const result = await fetch('https://api.music.apple.com/v1/me/library/playlists', {
       headers: {
-        'Authorization': `Bearer ${g_access_token}`,
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
     });
+    console.log("crying ", result);
     //console.log("API Response:", await result.text()); // Print raw response
 
     const data = await result.json();

@@ -1,5 +1,7 @@
 .music{
     .music-content{
+        height: 150px;
+        width: 200px;
         padding: 20px 0;
         background: white;
         border-radius: 7px;
@@ -14,18 +16,39 @@
         &.active{
             background:  #CAE9FF;
         }
+        .image-wrapper {
+            align-content: center;
+            //display: inline;
+            height: 70px;
+            // img {
+            //     display:flex;
+            //     align-self:center;
+            //     margin: 0 auto;
+            //     border-radius: 7px;
+            // }
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100px;
+            width: 100px;
+            overflow: hidden;
+            
+        }
+    
+        // .image-wrapper {
+        //     height: 100px;
+        //     width: 100px;
+        //     overflow: hidden;
+        // }
+
     }
-    img{
-        width: 50%;
-        display: block;
-        margin: 0 auto;
-        border-radius: 7px;
-    }
-    .image-wrapper{
-        height: 110px;
-    }
+    
+    
     div.right{
-        margin-top: 15px;
+        margin-top: 30px;
         padding: 5px;
         font-size: 16px;
         text-align: center;
@@ -60,10 +83,12 @@
         .music-content{
             padding: 10px;
             .image-wrapper{
-                display: inline;
+                display: flex;
+                height: auto;
+                align-items: center;
             }
             img{
-                width: 20%;
+                width: 70%;
                 display: inline;
                 margin-right: 10px;
             }

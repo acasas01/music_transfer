@@ -9,6 +9,7 @@ import PacmanLoader from "react-spinners/PacmanLoader"
 //import { apple_auth } from '../../apple/apple-provider'
 import like_track from "../../svg/like_track.png"
 import './style.scss';
+import * as apple_auth from '../../apple/apple_calls';
 
 // take note of name, and get all track names to query for new playlist in apple music
 
@@ -69,7 +70,7 @@ class Playlist extends React.Component {
     componentDidMount() {
         // Make the API call to get the user's playlists
         this.setState({ loading: true });
-        console.log("is this getting called")
+        console.log("is this getting called");
         fetch('http://localhost:8888/playlist', {
         })
           .then(response => response.json())
@@ -91,24 +92,25 @@ class Playlist extends React.Component {
       }
 
 
-    handleCheckChildElement = (event) => {
+    handleCheckChildElement = (event) => { // where to get playlistName.
         const { parsedJsonData, selectedPlaylists } = this.state;
-        
-        if (selectedPlaylists.includes(playlistName)) {
-            // If the playlist name is already in the selectedPlaylists, remove it
-            this.setState({
-              selectedPlaylists: selectedPlaylists.filter(name => name !== playlistName),
-            });
-          } else {
-            // If the playlist name is not in selectedPlaylists, add it
-            this.setState({
-              selectedPlaylists: [...selectedPlaylists, playlistName],
-            });
-          }
+        console.log(selectedPlaylists);
+        // if (selectedPlaylists.includes(playlistName)) {
+        //     // If the playlist name is already in the selectedPlaylists, remove it
+        //     this.setState({
+        //       selectedPlaylists: selectedPlaylists.filter(name => name !== playlistName),
+        //     });
+        //   } else {
+        //     // If the playlist name is not in selectedPlaylists, add it
+        //     this.setState({
+        //       selectedPlaylists: [...selectedPlaylists, playlistName],
+        //     });
+        //   }
 
         const updatedData = parsedJsonData.map((data) => {
             if (data.id === event.target.id) {
                 if (data.isChecked) {
+                    console.log("deleted")
                     selectedPlaylists.delete(event.target.id);
                 } else {
                     selectedPlaylists.add(event.target.id);
@@ -132,12 +134,34 @@ class Playlist extends React.Component {
     }
 
     transferToApple = () => {
-        console.log("playlists ", this.state.selectedPlaylists);
-        this.setState({
-            loading: true,
-        })
-        this.props.A(this.selectedPlaylists, this.state.spotifyAccessTokenJson)
-    }
+        console.log("HWEREWR WERJKNFSDJKFSDNJKDFSDFJKS transferToApple is called");
+        apple_auth.configure();
+        this.setState({ loading: true });
+        
+        
+        // fetch('http://localhost:8888/appleplaylist', {
+        // })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     // Handle the response data, which will contain information about the user's playlists
+        //     console.log(data.items);
+        //     this.setState({
+        //       loading: false,
+        //       parsedJsonData: data, // Hopefully can handle the items returend
+        //       selectedPlaylists: new Set()
+        //     });
+        //     //this.state.selectedPlaylists = new Set();
+        //     //console.log("parsedJsonData ", this.state.parsedJsonData);
+        //   })
+        //   .catch(error => {
+        //     console.error('Error fetching playlists client:', error);
+        //     this.setState({ loading: false });
+        //   });
+      }
+        //console.log("playlists ", this.state.selectedPlaylists);
+        
+        //this.props.A(this.selectedPlaylists, this.state.spotifyAccessTokenJson)
+    
 
     render() {
         return (
@@ -152,10 +176,10 @@ class Playlist extends React.Component {
 
                 <div className="playlist-inner">
                 <div className="button-wrapper">
-                    <button onClick={this.transferToApple}>Transfer Selected Playlists To Apple Music</button>
+                    <button className="butt" onClick={this.transferToApple}>Transfer Selected Playlists To Apple Music</button>
                 </div>
 
-                {this.state.loading ? (
+                {this.state.t ? (
                     <PacmanLoader css={this.spinnerCss()} size={50} color={"#123abc"} />
                 ) : (
                     this.state.parsedJsonData && this.state.parsedJsonData.map((data) => (

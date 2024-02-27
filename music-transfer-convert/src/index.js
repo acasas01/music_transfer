@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './main.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as apple_auth from './apple/apple_calls';
 
+apple_auth.configure();
+console.log("INDEX PLEASE");
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<React.StrictMode>
+  // <React.StrictMode>
     <App />
-  //</React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
